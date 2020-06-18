@@ -1,0 +1,27 @@
+{
+  "name": "restful-api",
+  "version": "1.0.0",
+  "description": "simple web restful api using nodejs",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon -r esm dotenv/config index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "iamhuynq",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "dotenv": "^8.2.0",
+    "esm": "^3.2.25",
+    "express": "^4.17.1",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^3.0.0",
+    "@types/express": "^4.17.6",
+    "@types/mysql": "^2.15.13",
+    "nodemon": "^2.0.4",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.5"
+  }
+}
