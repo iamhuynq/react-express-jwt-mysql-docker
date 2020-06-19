@@ -5,7 +5,7 @@ WORKDIR /usr/src/app
 
 # Install app dependencies
 COPY package*.json ./
-RUN npm install -g yarn
+RUN npm install -g react-scripts
 RUN yarn
 
 # Copy app source code
