@@ -24,3 +24,10 @@ services:
             MYSQL_PASS: 12345
             MYSQL_DB: restful_api
             APP_PORT: 3000
+    frontend-services:
+        build: ./frontend
+        stdin_open: true
+        volumes:
+            - ./frontend:/usr/src/app
+        ports: 
+            - 5002:3000
