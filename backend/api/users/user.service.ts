@@ -11,3 +11,10 @@ export const create = (data: any, callBack: Function) => {
         }
     )
 }
+
+export const get = (callBack: Function) => {
+    pool.query(`SELECT * FROM registers`, (error, result) => {
+        if (error) return callBack(error)
+        return callBack(null, result)
+    })
+}

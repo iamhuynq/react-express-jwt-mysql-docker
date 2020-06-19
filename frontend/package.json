@@ -16,6 +16,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "proxy": "http://backend-services:3000",
   "eslintConfig": {
     "extends": "react-app"
   },

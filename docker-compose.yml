@@ -31,3 +31,5 @@ services:
             - ./frontend:/usr/src/app
         ports: 
             - 5002:3000
+        links: 
+            - backend-services
