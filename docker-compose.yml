@@ -33,3 +33,11 @@ services:
             - 5002:3000
         links: 
             - backend-services
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: phpmyadmin
+        environment: 
+            PMA_ARBITRARY: 1
+        restart: always
+        ports:
+            - 8899:80
