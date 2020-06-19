@@ -1,0 +1,26 @@
+version: '3'
+services:
+    db:
+        build: ./db
+        restart: always
+        ports:
+            - 3306:3306
+        environment: 
+            MYSQL_DATABASE: restful_api 
+            MYSQL_ROOT_PASSWORD: 12345
+    backend-services:
+        build: ./backend
+        volumes:
+            - ./backend:/usr/src/app
+            - /usr/src/app/node_modules
+        ports:
+            - 5001:3000
+        depends_on:
+            - db
+        environment: 
+            DB_HOST: db
+            MYSQL_PORT: 3306
+            MYSQL_USER: root
+            MYSQL_PASS: 12345
+            MYSQL_DB: restful_api
+            APP_PORT: 3000
