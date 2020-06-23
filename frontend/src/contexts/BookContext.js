@@ -10,14 +10,19 @@ const BookContextProvider = (props) => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-              },
+            },
             body: JSON.stringify({ title, author })
-        }).then(res => res.json()).then(data => console.log(data))
-        setBooks([...books, { title: title, author: author, id: 10 }])
+        }).then(res => res.json()).then(data => setBooks([...books, { title: title, author: author, id: data.data.insertId }]))
     }
 
     const removeBook = id => {
-        setBooks(books.filter(book => book.id !== id))
+        fetch('/api/books', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id })
+        }).then(() => setBooks(books.filter(book => book.id !== id)))
     }
     
     useEffect(() => {

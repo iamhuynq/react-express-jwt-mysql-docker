@@ -1,4 +1,4 @@
-import { create, get } from './book.service'
+import { create, get, deleteBook } from './book.service'
 import { Request, Response } from 'express'
 
 export const createBook = (req: Request, res: Response) => {
@@ -33,4 +33,23 @@ export const getBook = (req: Request, res: Response) => {
             data: result,
         })
     })
+}
+
+export const deleteBookById = (req: Request, res: Response) => {
+    deleteBook(req.body.id, (err: any, results: any) => {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        if (!results) {
+            return res.json({
+                success: 0,
+                message: "Record Not found"
+            });
+        }
+        return res.json({
+            success: 1,
+            message: "Book deleted successfully"
+        });
+    });
 }
