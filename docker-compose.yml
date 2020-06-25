@@ -29,6 +29,7 @@ services:
         stdin_open: true
         volumes:
             - ./frontend:/usr/src/app
+            - /usr/src/app/node_modules
         ports: 
             - 5002:3000
         links: 

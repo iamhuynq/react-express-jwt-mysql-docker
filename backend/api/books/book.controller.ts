@@ -3,7 +3,8 @@ import { Request, Response } from 'express'
 
 export const createBook = (req: Request, res: Response) => {
     const body = req.body;
-    console.log(body)
+    console.log(req.cookies['token']);
+
     create(body, (err: any, result: any) => {
         if (err) {
             console.log(err)
@@ -14,7 +15,7 @@ export const createBook = (req: Request, res: Response) => {
         }
         return res.status(200).json({
             success: 1,
-            data: result,
+            data: result, 
         })
     })
 }
@@ -28,6 +29,7 @@ export const getBook = (req: Request, res: Response) => {
                 message: 'Database connection error',
             })
         }
+        res.cookie('token', 'test_token', { maxAge: 900000, httpOnly: true });
         return res.status(200).json({
             success: 1,
             data: result,
