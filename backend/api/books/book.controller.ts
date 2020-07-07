@@ -29,7 +29,6 @@ export const getBook = (req: Request, res: Response) => {
                 message: 'Database connection error',
             })
         }
-        res.cookie('token', 'test_token', { maxAge: 900000, httpOnly: true });
         return res.status(200).json({
             success: 1,
             data: result,

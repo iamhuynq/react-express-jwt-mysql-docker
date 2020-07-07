@@ -10,9 +10,13 @@ export const createUser = (req: Request, res: Response) => {
     create(body, (err: any, result: any) => {
         if (err) {
             console.log(err)
+            let error = 'Database connection error';
+            if (err.code == 'ER_DUP_ENTRY') {
+                error = 'Email already be used'
+            }
             return res.status(500).json({
                 success: 0,
-                message: 'Database connection error',
+                message: error,
             })
         }
         return res.status(200).json({
@@ -109,7 +113,7 @@ export const login = (req: Request, res: Response) => {
         if (!results) {
             return res.json({
                 success: 0,
-                data: "Invalid email or password"
+                message: "Invalid email or password"
             });
         }
         const result = compareSync(body.password, results.password);
@@ -118,16 +122,31 @@ export const login = (req: Request, res: Response) => {
             const jsontoken = sign({ result: results }, "qwe1234", {
                 expiresIn: "1h"
             });
+            res.cookie('TOKEN', jsontoken, { expires: new Date(Date.now() + 900000), httpOnly: true });
             return res.json({
                 success: 1,
                 message: "login successfully",
-                token: jsontoken
             });
         } else {
             return res.json({
                 success: 0,
-                data: "Invalid email or password"
+                message: "Password is not correct"
             });
         }
     });
 }
+
+export const logout = (req: Request, res: Response) => {
+    res.clearCookie('TOKEN');
+    return res.json({
+        success: 1,
+    });
+};
+
+export const getInfo = (req: Request, res: Response) => {
+    const userEmail = res.locals.userEmail
+    return res.json({
+        success: 1,
+        email: userEmail
+    });
+};

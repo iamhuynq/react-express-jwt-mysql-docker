@@ -1,10 +1,10 @@
 import { pool } from '../../config/database'
 
 export const create = (data: any, callBack: Function) => {
-    const { first_name, last_name, gender, email, password, number } = data;
-    pool.query(`INSERT INTO registers(firstName, lastName, gender, email, password, number)
-                    values(?, ?, ?, ?, ?,?)`,
-        [first_name, last_name, gender, email, password, number],
+    const { email, password } = data;
+    pool.query(`INSERT INTO users(email, password)
+                    values(?, ?)`,
+        [email, password],
         (error, result, fields) => {
             if (error) return callBack(error)
             return callBack(null, result)
@@ -13,14 +13,14 @@ export const create = (data: any, callBack: Function) => {
 }
 
 export const get = (callBack: Function) => {
-    pool.query(`SELECT * FROM registers`, (error, result) => {
+    pool.query(`SELECT * FROM users`, (error, result) => {
         if (error) return callBack(error)
         return callBack(null, result)
     })
 }
 
 export const getByID = (id: string, callBack: Function) => {
-    pool.query(`SELECT * FROM registers WHERE id=?`, [id], (error, result) => {
+    pool.query(`SELECT * FROM users WHERE id=?`, [id], (error, result) => {
         if (error) return callBack(error)
         return callBack(null, result)
     })
@@ -28,7 +28,7 @@ export const getByID = (id: string, callBack: Function) => {
 
 export const updateUser = (data: any, callBack: Function) => {
     pool.query(
-        `UPDATE registers SET firstName=?, lastName=?, gender=?, email=?, password=?, number=? where id = ?`,
+        `UPDATE users SET firstName=?, lastName=?, gender=?, email=?, password=?, number=? where id = ?`,
         [
             data.first_name,
             data.last_name,
@@ -61,7 +61,7 @@ export const deleteUser = (id: number, callBack: Function) => {
 }
 
 export const getUserByUserEmail = (email: string, callBack: Function) => {
-    pool.query(`SELECT * FROM registers WHERE email=?`, [email], (error, result) => {
+    pool.query(`SELECT * FROM users WHERE email=?`, [email], (error, result) => {
         if (error) return callBack(error)
         return callBack(null, result[0])
     })
