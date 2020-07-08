@@ -1,9 +1,9 @@
 import React from 'react';
 import NewBookForm from '../components/NewBookForm'
 
-const NewBook = () => {
+const NewBook = props => {
     return (
-        <NewBookForm />
+        <NewBookForm {...props} />
     );
 }
 
