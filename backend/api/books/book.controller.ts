@@ -1,23 +1,33 @@
 import { create, get, deleteBook } from './book.service'
 import { Request, Response } from 'express'
 
-export const createBook = (req: Request, res: Response) => {
-    const body = req.body;
-    console.log(req.cookies['token']);
-
-    create(body, (err: any, result: any) => {
+export const createBook = (req: any, res: Response) => {
+    const { title, author } = req.body;
+    const { file }  = req.files;
+    file.mv(`./public/upload/${file.name}`, (err: any) => {
         if (err) {
-            console.log(err)
-            return res.status(500).json({
+            return res.status(401).json({
                 success: 0,
-                message: 'Database connection error',
+                message: 'Something wrong!'
             })
         }
-        return res.status(200).json({
-            success: 1,
-            data: result, 
+        create({
+            title: title,
+            author: author,
+            image: `${req.files.file.name}`,
+        }, (error: any, result: any) => {
+            if(error) {
+                return res.status(401).json({
+                    success: 0,
+                    message: 'Something wrong!'
+                })
+            }
+            return res.status(200).json({
+                success: 1,
+                message: result,
+            })
         })
-    })
+    });
 }
 
 export const getBook = (req: Request, res: Response) => {

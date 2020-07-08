@@ -1,10 +1,11 @@
 import { pool } from '../../config/database'
 
 export const create = (data: any, callBack: Function) => {
-    const { title, author } = data;
-    pool.query(`INSERT INTO books(title, author)
-                    values(?, ?)`,
-        [title, author],
+    console.log('AAAA',data)
+    const { title, author, image } = data;
+    pool.query(`INSERT INTO books(title, author, image)
+                    values(?, ?, ?)`,
+        [title, author, image],
         (error, result, fields) => {
             if (error) return callBack(error)
             return callBack(null, result)
